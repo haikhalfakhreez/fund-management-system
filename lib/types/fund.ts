@@ -1,3 +1,16 @@
+export type Fund = {
+  id: string
+  name: string
+  description: string
+  inceptionDate: Date
+  currentYtd: number
+  currentNav: number
+  investmentType: FundInvestmentType
+  isShariah: boolean
+  ytdHistory: FundHistory[]
+  navHistory: FundHistory[]
+}
+
 export type FundInvestmentType =
   | "Income"
   | "Growth"

@@ -1,31 +1,22 @@
-import { prisma } from "~/prisma/db"
-
 export default defineEventHandler(async (event) => {
   try {
     const id = getRouterParam(event, "id")
 
     if (!id) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "ID is required",
-      })
+      return null
     }
 
-    const fund = await prisma.fund.findUnique({
-      where: {
-        id: id as string,
-      },
+    const fund = await useDb().query.funds.findFirst({
+      where: (funds, { eq }) => eq(funds.id, id),
     })
 
     if (!fund) {
-      throw createError({
-        statusCode: 404,
-        statusMessage: `Fund not found (ID: ${id}).`,
-      })
+      return null
     }
 
     return fund
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return null
   }
 })

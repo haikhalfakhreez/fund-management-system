@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Fund } from "@prisma/client"
 import { FundInvestmentType } from "~/lib/types/fund"
 
 const { data: funds } = await useFetch<Fund[]>("/api/funds")
@@ -42,7 +41,7 @@ const fundsTable = computed(() => {
     currentNav: fund.currentNav,
     navPercentageChange: getNavPercentageChange(
       fund.currentNav,
-      JSON.parse(fund.navHistory),
+      fund.navHistory,
     ),
     investmentType: fund.investmentType as FundInvestmentType,
     isShariah: fund.isShariah,

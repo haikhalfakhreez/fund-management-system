@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Fund } from "@prisma/client"
-
 definePageMeta({
   middleware: "fund",
 })

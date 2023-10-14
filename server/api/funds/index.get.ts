@@ -1,10 +1,9 @@
-import { prisma } from "~/prisma/db"
-
 export default defineEventHandler(async (event) => {
   try {
-    const funds = await prisma.fund.findMany()
+    const funds = await useDb().query.funds.findMany()
     return funds
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return null
   }
 })

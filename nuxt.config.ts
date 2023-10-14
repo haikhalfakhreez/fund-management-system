@@ -26,8 +26,6 @@ export default defineNuxtConfig({
   },
   alias: {
     cookie: resolve(__dirname, "node_modules/cookie"),
-    ".prisma/client/index-browser":
-      "./node_modules/@prisma/client/index-browser.js",
   },
   ui: {
     icons: ["heroicons", "mdi"],

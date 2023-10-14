@@ -1,15 +1,10 @@
-import { prisma } from "~/prisma/db"
-
 export default defineNuxtRouteMiddleware(async (to, from) => {
   if (process.client) return
 
-  const id = await prisma.fund.findUnique({
-    where: {
-      id: to.params.id as string,
-    },
-  })
+  const paramsId = to.params.id as string
+  const fund = await $fetch(`/api/funds/${paramsId}`)
 
-  if (!id) {
+  if (!fund) {
     return abortNavigation()
   }
 

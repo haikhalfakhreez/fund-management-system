@@ -1,5 +1,4 @@
-import type { Fund } from "@prisma/client"
-import { FundHistory, FundTotalReturn } from "~/lib/types/fund"
+import { Fund, FundHistory, FundTotalReturn } from "~/lib/types/fund"
 
 export function getNavPercentageChange(
   current: number,
@@ -17,7 +16,7 @@ export function getNavPercentageChange(
 }
 
 export function getFundTotalReturn(fund: Fund): FundTotalReturn {
-  const ytdHistory: FundHistory[] = JSON.parse(fund.ytdHistory)
+  const ytdHistory: FundHistory[] = fund.ytdHistory
   const currentYtd = fund.currentYtd
   let closestOneMonth = 0
   let closestOneYear = 0

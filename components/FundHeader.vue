@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Fund } from "@prisma/client"
+import { Fund } from "~/lib/types/fund"
 
 defineProps<{
   fund: Fund
