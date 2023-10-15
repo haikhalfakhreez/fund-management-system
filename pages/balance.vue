@@ -28,37 +28,33 @@ const rows = computed(() => history.value ?? [])
 </script>
 
 <template>
-  <UContainer class="py-8 w-full flex-1">
+  <UContainer class="py-8 w-full flex-1 space-y-10">
     <PageTitle
       name="Account Balance"
       description="Manage your account balance."
     />
 
-    <div
-      class="flex md:items-start justify-between py-8 gap-4 md:gap-12 flex-col md:flex-row"
-    >
-      <UCard class="flex-1 bg-indigo-50">
-        <div class="font-medium text-secondary md:text-lg">MYR</div>
-        <div class="text-2xl md:text-8xl font-bold tabular-nums">
-          {{ abbreviateNumber(balance ?? 0) }}
+    <div class="space-y-4">
+      <NumberDisplay
+        label="Wallet Balance (MYR)"
+        :value="abbreviateNumber(balance ?? 0)"
+      />
+
+      <AddMoneyModal />
+    </div>
+
+    <PageSection title="Transaction History">
+      <div class="grid">
+        <div
+          class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
+        >
+          <UTable :columns="columns" :rows="rows">
+            <template #createdAt-data="{ getRowData }">
+              {{ formatDate(getRowData(), { time: true }) }}
+            </template>
+          </UTable>
         </div>
-      </UCard>
-
-      <div>
-        <AddMoneyModal />
       </div>
-    </div>
-
-    <div class="grid">
-      <div
-        class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
-      >
-        <UTable :columns="columns" :rows="rows">
-          <template #createdAt-data="{ getRowData }">
-            {{ formatDate(getRowData(), { time: true }) }}
-          </template>
-        </UTable>
-      </div>
-    </div>
+    </PageSection>
   </UContainer>
 </template>

@@ -25,7 +25,7 @@ const items = [
     {
       label: "Portfolio",
       icon: "i-heroicons-currency-dollar-20-solid",
-      to: "/settings",
+      to: "/portfolio",
     },
     {
       label: "Account Balance",

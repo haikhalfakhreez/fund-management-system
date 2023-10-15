@@ -1,5 +1,5 @@
 <template>
-  <FundSection title="Historical Performance Data">
+  <PageSection title="Historical Performance Data">
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
       <UFormGroup label="Current View" class="col-span-2 md:col-span-1">
         <USelect v-model="view" :options="options" />
@@ -15,7 +15,7 @@
     </div>
 
     <LineChart :key="key" :data="data" :label="label" />
-  </FundSection>
+  </PageSection>
 </template>
 
 <script setup lang="ts">

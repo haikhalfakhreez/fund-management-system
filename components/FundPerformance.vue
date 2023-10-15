@@ -1,5 +1,5 @@
 <template>
-  <FundSection title="Performance">
+  <PageSection title="Performance">
     <div class="grid">
       <div
         class="border rounded-md border-gray-600 overflow-x-auto [&_table_th]:whitespace-nowrap"
@@ -24,7 +24,7 @@
         />
       </div>
     </div>
-  </FundSection>
+  </PageSection>
 </template>
 
 <script setup lang="ts">

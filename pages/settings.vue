@@ -66,7 +66,9 @@ async function submit(event: FormSubmitEvent<any>) {
       </div>
 
       <div class="flex justify-end">
-        <UButton type="submit" size="lg" :loading="loading"> Update </UButton>
+        <UButton type="submit" size="lg" :loading="loading" color="black">
+          Update
+        </UButton>
       </div>
     </UForm>
   </UContainer>
