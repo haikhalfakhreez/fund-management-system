@@ -1,45 +1,43 @@
 <template>
-  <UPopover class="flex">
+  <UDropdown :items="items" :popper="{ placement: 'bottom-end' }">
     <UAvatar
       :src="session?.user?.image ?? undefined"
       :alt="session?.user?.name ?? undefined"
     />
-    <template #panel>
-      <UCard :ui="{ body: { padding: 'p-1 md:p-1' } }">
-        <div class="flex flex-col">
-          <UButton
-            color="gray"
-            variant="ghost"
-            size="sm"
-            icon="i-heroicons-currency-dollar"
-          >
-            Portfolio
-          </UButton>
-          <UButton
-            color="gray"
-            variant="ghost"
-            size="sm"
-            icon="i-heroicons-cog"
-            to="/settings"
-          >
-            Settings
-          </UButton>
-          <div class="h-px w-full bg-gray-200 my-1"></div>
-          <UButton
-            color="red"
-            variant="soft"
-            size="sm"
-            icon="i-heroicons-arrow-left-on-rectangle"
-            @click="signOut()"
-          >
-            Sign Out
-          </UButton>
-        </div>
-      </UCard>
-    </template>
-  </UPopover>
+  </UDropdown>
 </template>
 
 <script setup lang="ts">
 const { signOut, session } = useAuth()
+
+const items = [
+  [
+    {
+      label: "Profile",
+      avatar: {
+        src: session.value?.user.image ?? undefined,
+        alt: session.value?.user.name ?? undefined,
+      },
+    },
+  ],
+  [
+    {
+      label: "Portfolio",
+      icon: "i-heroicons-currency-dollar-20-solid",
+      to: "/settings",
+    },
+    {
+      label: "Account Balance",
+      icon: "i-heroicons-wallet-20-solid",
+      to: "/settings",
+    },
+  ],
+  [
+    {
+      label: "Sign Out",
+      icon: "i-heroicons-arrow-left-on-rectangle-20-solid",
+      click: () => signOut(),
+    },
+  ],
+]
 </script>

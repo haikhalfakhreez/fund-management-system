@@ -29,7 +29,7 @@
         />
         <ThemeToggle />
 
-        <div class="ml-2">
+        <div class="ml-2 flex">
           <UserDropdown />
         </div>
       </div>
