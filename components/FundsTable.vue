@@ -35,13 +35,9 @@ const columns = [
 
 const fundsTable = computed(() => {
   return funds.value?.map((fund) => ({
-    id: fund.id,
-    name: fund.name,
+    ...fund,
     currentYtd: fund.currentYtd + "%",
-    currentNav: fund.currentNav,
     navPercentageChange: getFundTotalReturn(fund).sinceInception,
-    investmentType: fund.investmentType as FundInvestmentType,
-    isShariah: fund.isShariah,
   }))
 })
 
@@ -89,7 +85,7 @@ const filteredRows = computed(() => {
           <template #name-data="{ row, getRowData }">
             <UButton
               variant="link"
-              :to="`fund/${row.id}`"
+              :to="`/fund/${row.id}`"
               color="black"
               class="px-0"
             >
@@ -122,7 +118,12 @@ const filteredRows = computed(() => {
           </template>
 
           <template #actions-data="{ row }">
-            <UButton :to="`/fund/${row.id}`" color="white"> View Fund </UButton>
+            <div class="flex items-stretch gap-2">
+              <UButton :to="`/fund/${row.id}`" color="white">
+                View Fund
+              </UButton>
+              <PurchaseModal :fund="row" small />
+            </div>
           </template>
         </UTable>
       </div>

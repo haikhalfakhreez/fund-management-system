@@ -60,14 +60,12 @@ export const verificationTokens = sqliteTable(
 )
 
 // App Data
-export const portfolios = sqliteTable("portfolio", {
-  id: text("id").primaryKey(),
-  userId: integer("userId").references(() => users.id),
-})
-
 export const investments = sqliteTable("investment", {
   id: text("id").primaryKey(),
-  portfolioId: text("portfolioId").references(() => portfolios.id),
+  userId: text("userId")
+    .references(() => users.id)
+    .notNull()
+    .unique(),
   fundId: text("fundId"),
   units: real("units"),
   amount: real("amount"),
@@ -76,6 +74,7 @@ export const investments = sqliteTable("investment", {
 export const funds = sqliteTable("fund", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  ticker: text("ticker").notNull(),
   description: text("description"),
   inceptionDate: integer("inceptionDate", { mode: "timestamp" }).notNull(),
   currentYtd: real("currentYtd").notNull(),
@@ -93,37 +92,38 @@ export const funds = sqliteTable("fund", {
   launchPrice: real("launchPrice").notNull(),
 })
 
-export const transactionHistory = sqliteTable("transactionHistory", {
+export const transactions = sqliteTable("transactions", {
   id: text("id").primaryKey(),
-  portfolioId: text("portfolioId").references(() => portfolios.id),
+  userId: text("userId")
+    .references(() => users.id)
+    .notNull(),
   fundId: text("fundId").references(() => funds.id),
   transactionType: text("transactionType", {
     enum: ["Purchase", "Sale"],
   }).notNull(),
   units: real("units").notNull(),
   amount: real("amount").notNull(),
-  transactionDate: integer("transactionDate", { mode: "timestamp" }).notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 })
 
 export const accountBalance = sqliteTable("accountBalance", {
   id: text("id").primaryKey(),
-  portfolioId: text("portfolioId").references(() => portfolios.id),
+  userId: text("userId")
+    .references(() => users.id)
+    .notNull()
+    .unique(),
   balance: real("balance").notNull(),
-  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 })
 
 export const balanceHistory = sqliteTable("balanceHistory", {
   id: text("id").primaryKey(),
-  portfolioId: text("portfolioId").references(() => portfolios.id),
+  userId: text("userId")
+    .references(() => users.id)
+    .notNull(),
   balance: real("balance").notNull(),
   change: real("change").notNull(),
   changeType: text("changeType", {
     enum: ["Deposit", "Withdrawal", "Investment", "Divestment"],
   }).notNull(),
-  changeDate: integer("changeDate", { mode: "timestamp" }).notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 })

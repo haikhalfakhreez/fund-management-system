@@ -45,12 +45,25 @@ function getPercentageChange(initial: number, current: number) {
   return parseFloat((((current - initial) / initial) * 100).toFixed(2))
 }
 
+type FormatDateOptions = {
+  time?: boolean
+}
+
 // Format date to dd MMM yyyy
-export function formatDate(date: string | Date) {
+// Format time to HH:MM:SS
+export function formatDate(date: string | Date, options?: FormatDateOptions) {
   const d = typeof date === "string" ? new Date(date) : date
   const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
   const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d)
   const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d)
+
+  if (options?.time) {
+    const hours = String(d.getHours()).padStart(2, "0")
+    const minutes = String(d.getMinutes()).padStart(2, "0")
+    const seconds = String(d.getSeconds()).padStart(2, "0")
+
+    return `${da} ${mo} ${ye} ${hours}:${minutes}:${seconds}`
+  }
 
   return `${da} ${mo} ${ye}`
 }

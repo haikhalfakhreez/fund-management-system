@@ -18,6 +18,7 @@ const items = [
         src: session.value?.user.image ?? undefined,
         alt: session.value?.user.name ?? undefined,
       },
+      to: "/settings",
     },
   ],
   [
@@ -29,7 +30,7 @@ const items = [
     {
       label: "Account Balance",
       icon: "i-heroicons-wallet-20-solid",
-      to: "/settings",
+      to: "/balance",
     },
   ],
   [

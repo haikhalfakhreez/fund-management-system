@@ -10,6 +10,7 @@ export type Fund = {
   ytdHistory: FundHistory[]
   navHistory: FundHistory[]
   launchPrice: number
+  ticker: string
 }
 
 export type FundInvestmentType =

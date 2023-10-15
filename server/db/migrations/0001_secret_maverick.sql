@@ -1,1 +1,0 @@
-ALTER TABLE fund ADD `launchPrice` real NOT NULL;

@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   },
   ui: {
     icons: ["heroicons", "mdi"],
-    safelistColors: ["indigo", "green", "red"],
+    safelistColors: ["indigo", "green", "red", "orange"],
   },
   css: ["~/assets/css/font.css", "~/assets/css/tailwind.css"],
   fontMetrics: {

@@ -14,7 +14,8 @@ const { data: fund } = await useFetch<Fund>(`/api/funds/${id}`)
 <template>
   <template v-if="fund">
     <FundHeader :fund="fund" />
-    <UContainer class="py-12 w-full space-y-20">
+    <UContainer class="py-12 w-full space-y-16">
+      <FundTransaction :fund="fund" />
       <FundPerformance :fund="fund" />
       <FundChart :fund="fund" />
     </UContainer>

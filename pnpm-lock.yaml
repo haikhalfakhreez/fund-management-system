@@ -26,6 +26,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.28.6
     version: 0.28.6(@types/better-sqlite3@7.6.5)(better-sqlite3@9.0.0)
+  js-abbreviation-number:
+    specifier: ^1.4.0
+    version: 1.4.0
   nanoid:
     specifier: ^5.0.1
     version: 5.0.1
@@ -4539,6 +4542,10 @@ packages:
 
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
+    dev: false
+
+  /js-abbreviation-number@1.4.0:
+    resolution: {integrity: sha512-4sSNspIdfSjCrKm97JZRFgaNgkwBIiVL+hb+piWXqmFW9HaixGa+3G+dSClZvryUZqlcFhMOG3gCeUuAP6lLig==}
     dev: false
 
   /js-tokens@4.0.0:

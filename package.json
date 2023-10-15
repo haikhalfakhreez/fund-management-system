@@ -35,6 +35,7 @@
     "apexcharts": "3.43.2-0",
     "better-sqlite3": "^9.0.0",
     "drizzle-orm": "^0.28.6",
+    "js-abbreviation-number": "^1.4.0",
     "nanoid": "^5.0.1",
     "vue3-apexcharts": "^1.4.4"
   }
