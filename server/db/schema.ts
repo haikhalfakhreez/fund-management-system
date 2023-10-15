@@ -92,3 +92,38 @@ export const funds = sqliteTable("fund", {
     .notNull(),
   launchPrice: real("launchPrice").notNull(),
 })
+
+export const transactionHistory = sqliteTable("transactionHistory", {
+  id: text("id").primaryKey(),
+  portfolioId: text("portfolioId").references(() => portfolios.id),
+  fundId: text("fundId").references(() => funds.id),
+  transactionType: text("transactionType", {
+    enum: ["Purchase", "Sale"],
+  }).notNull(),
+  units: real("units").notNull(),
+  amount: real("amount").notNull(),
+  transactionDate: integer("transactionDate", { mode: "timestamp" }).notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
+})
+
+export const accountBalance = sqliteTable("accountBalance", {
+  id: text("id").primaryKey(),
+  portfolioId: text("portfolioId").references(() => portfolios.id),
+  balance: real("balance").notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
+})
+
+export const balanceHistory = sqliteTable("balanceHistory", {
+  id: text("id").primaryKey(),
+  portfolioId: text("portfolioId").references(() => portfolios.id),
+  balance: real("balance").notNull(),
+  change: real("change").notNull(),
+  changeType: text("changeType", {
+    enum: ["Deposit", "Withdrawal", "Investment", "Divestment"],
+  }).notNull(),
+  changeDate: integer("changeDate", { mode: "timestamp" }).notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
+})

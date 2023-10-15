@@ -30,7 +30,7 @@ const loading = ref(false)
 async function submit(event: FormSubmitEvent<any>) {
   loading.value = true
 
-  await $fetch("/api/user", {
+  await $fetch("/api/users", {
     method: "PUT",
     body: JSON.stringify(event.data),
   })

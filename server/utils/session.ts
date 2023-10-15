@@ -2,7 +2,7 @@ import { H3Event } from "h3"
 import { getServerSession } from "#auth"
 import { authOptions } from "~/lib/auth"
 
-export async function getSession(event: H3Event) {
+export async function requireUserSession(event: H3Event) {
   const session = await getServerSession(event, authOptions)
 
   if (!session) {

@@ -69,7 +69,7 @@ const rows = [
     sinceInception: sinceInception + "%",
     class:
       sinceInception < 0
-        ? "bg-red-500 dark:bg-red-600"
+        ? "bg-red-300 dark:bg-red-400"
         : "bg-green-300 dark:bg-green-400",
   },
 ]

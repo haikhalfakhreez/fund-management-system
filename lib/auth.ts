@@ -13,4 +13,21 @@ export const authOptions: AuthConfig = {
       clientSecret: runtimeConfig.github.clientSecret,
     }),
   ],
+  callbacks: {
+    async session({ session, user }) {
+      session.user.id = user.id
+      return session
+    },
+  },
+}
+
+declare module "@auth/core/types" {
+  interface Session {
+    user: {
+      id: string
+      name: string
+      email: string
+      image: string | null
+    }
+  }
 }

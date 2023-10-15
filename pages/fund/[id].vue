@@ -2,11 +2,11 @@
 import { Fund } from "~/lib/types/fund"
 
 definePageMeta({
-  middleware: ["auth", "fund"],
+  middleware: ["auth"],
 })
 
 const route = useRoute()
-const id = route.params.id
+const id = route.params.id as string
 
 const { data: fund } = await useFetch<Fund>(`/api/funds/${id}`)
 </script>
@@ -18,5 +18,9 @@ const { data: fund } = await useFetch<Fund>(`/api/funds/${id}`)
       <FundPerformance :fund="fund" />
       <FundChart :fund="fund" />
     </UContainer>
+  </template>
+
+  <template v-else>
+    <Fund404 :id="id" />
   </template>
 </template>

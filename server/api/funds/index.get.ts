@@ -1,11 +1,6 @@
-export default defineEventHandler(async (event) => {
-  try {
-    await getSession(event)
+import { getFunds } from "~/server/db/query/funds"
 
-    const funds = await useDb().query.funds.findMany()
-    return funds
-  } catch (error) {
-    console.error(error)
-    return null
-  }
+export default defineEventHandler(async (event) => {
+  await requireUserSession(event)
+  return await getFunds()
 })
