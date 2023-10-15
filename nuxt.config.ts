@@ -4,10 +4,10 @@ import { resolve } from "node:path"
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    "@nuxt/ui",
     "@hebilicious/authjs-nuxt",
     "@nuxtjs/fontaine",
     "@nuxtjs/google-fonts",
+    "@nuxt/ui",
   ],
   runtimeConfig: {
     authJs: {
@@ -29,8 +29,9 @@ export default defineNuxtConfig({
   },
   ui: {
     icons: ["heroicons", "mdi"],
+    safelistColors: ["indigo", "green", "red"],
   },
-  css: ["~/assets/css/font.css"],
+  css: ["~/assets/css/font.css", "~/assets/css/tailwind.css"],
   fontMetrics: {
     fonts: ["DM Sans"],
   },

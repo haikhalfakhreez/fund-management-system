@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { Fund } from "~/lib/types/fund"
+
 definePageMeta({
-  middleware: "fund",
+  middleware: ["auth", "fund"],
 })
 
 const route = useRoute()
@@ -12,9 +14,9 @@ const { data: fund } = await useFetch<Fund>(`/api/funds/${id}`)
 <template>
   <template v-if="fund">
     <FundHeader :fund="fund" />
-    <UContainer class="pt-12">
+    <UContainer class="py-12 w-full space-y-20">
       <FundPerformance :fund="fund" />
-      <div class="mt-20">{{ JSON.stringify(fund, null, 2) }}</div>
+      <FundChart :fund="fund" />
     </UContainer>
   </template>
 </template>

@@ -12,7 +12,7 @@ import type { AdapterAccount } from "@auth/core/adapters"
 export const users = sqliteTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
-  email: text("email").notNull(),
+  email: text("email").notNull().unique(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
 })
@@ -90,4 +90,5 @@ export const funds = sqliteTable("fund", {
   navHistory: text("navHistory", { mode: "json" })
     .$type<FundHistory[]>()
     .notNull(),
+  launchPrice: real("launchPrice").notNull(),
 })

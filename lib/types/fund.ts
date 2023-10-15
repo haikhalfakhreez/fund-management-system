@@ -9,6 +9,7 @@ export type Fund = {
   isShariah: boolean
   ytdHistory: FundHistory[]
   navHistory: FundHistory[]
+  launchPrice: number
 }
 
 export type FundInvestmentType =
@@ -30,7 +31,4 @@ export type FundTotalReturn = {
   sinceInception: number
 }
 
-export type FundHistory = {
-  date: string
-  value: number
-}
+export type FundHistory = [string, number] // [date, value]

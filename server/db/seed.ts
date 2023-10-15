@@ -1,111 +1,138 @@
 import { funds } from "./schema"
 import { useDb } from "../utils/db"
 import { nanoid } from "../utils/nanoid"
+import {
+  generateFakeNavPrice,
+  type GenerateFakeNavPriceParams,
+  generateYtdHistory,
+  getCurrentYtd,
+} from "~/server/utils/faker"
 
-const data: (typeof funds.$inferInsert)[] = [
-  {
+type Fund = typeof funds.$inferInsert
+
+type GenerateDataParams = Omit<
+  Fund,
+  | "ytdHistory"
+  | "navHistory"
+  | "currentYtd"
+  | "currentNav"
+  | "inceptionDate"
+  | "launchPrice"
+> &
+  Omit<GenerateFakeNavPriceParams, "startingPrice" | "volatility">
+
+function generateData({
+  startDate,
+  endDate,
+  ...rest
+}: GenerateDataParams): Fund {
+  const navHistory = generateFakeNavPrice({
+    startDate,
+    endDate,
+    startingPrice: 0.5,
+    volatility: 0.06,
+  })
+  const ytdHistory = generateYtdHistory(navHistory, 100)
+  const currentYtd = getCurrentYtd(ytdHistory)
+  const currentNav = navHistory[navHistory.length - 1][1]
+
+  return {
+    ...rest,
+    ytdHistory,
+    navHistory,
+    currentYtd,
+    currentNav,
+    launchPrice: 0.5,
+    inceptionDate: new Date(startDate),
+  }
+}
+
+const data: Fund[] = [
+  generateData({
+    startDate: "2020-07-01",
+    endDate: "2023-10-15",
     id: nanoid(),
     name: "Gotham Absolute Return Fund",
     description:
       "Founded by Bruce Wayne, Gotham Absolute Return Fund is a long/short equity fund that aims to generate positive returns in all market conditions.",
-    inceptionDate: new Date("2020-01-01"),
-    currentYtd: 138,
-    currentNav: 0.7,
     investmentType: "Growth",
     isShariah: true,
-    ytdHistory: [
-      { date: "2020-01-01", value: 100.0 },
-      { date: "2021-01-01", value: 110.0 },
-      { date: "2022-01-01", value: 120.0 },
-      { date: "2023-01-01", value: 130.0 },
-      { date: "2023-09-01", value: 135.0 },
-    ],
-    navHistory: [
-      { date: "2020-01-01", value: 0.5 },
-      { date: "2021-01-01", value: 0.55 },
-      { date: "2022-01-01", value: 0.6 },
-      { date: "2023-01-01", value: 0.65 },
-      { date: "2023-09-01", value: 0.68 },
-    ],
-  },
-  {
+  }),
+  generateData({
+    startDate: "2018-12-30",
+    endDate: "2023-10-15",
     id: nanoid(),
     name: "BlackRock Global Funds - World Technology Fund A2 USD",
     description:
       "BlackRock Global Funds - World Technology Fund A2 USD is an open-end fund incorporated in Luxembourg. The Fund's objective is to maximize total return. The Fund invests globally at least 70% of its total assets in the equity securities of companies whose predominant economic activity is in the technology sector.",
-    inceptionDate: new Date("2020-01-01"),
-    currentYtd: 108,
-    currentNav: 1.075,
     investmentType: "Income",
     isShariah: false,
-    ytdHistory: [
-      { date: "2020-01-01", value: 100.0 },
-      { date: "2021-01-01", value: 102.0 },
-      { date: "2022-01-01", value: 104.0 },
-      { date: "2023-01-01", value: 106.0 },
-      { date: "2023-09-01", value: 107.0 },
-    ],
-    navHistory: [
-      { date: "2020-01-01", value: 1.0 },
-      { date: "2021-01-01", value: 1.02 },
-      { date: "2022-01-01", value: 1.04 },
-      { date: "2023-01-01", value: 1.06 },
-      { date: "2023-09-01", value: 1.07 },
-    ],
-  },
-  {
+  }),
+  generateData({
+    startDate: "2019-01-01",
+    endDate: "2023-10-15",
     id: nanoid(),
     name: "Maybank Islamic Asia Pacific REITs Fund",
     description:
       "Maybank Islamic Asia Pacific REITs Fund is an Islamic income and growth fund that aims to provide regular income and medium to long-term capital growth by investing in Shariah-compliant real estate investment trusts (REITs) and Islamic real estate investment trusts (I-REITs) listed on stock exchanges in the Asia Pacific region.",
-    inceptionDate: new Date("2020-01-01"),
-    currentYtd: 200,
-    currentNav: 1.01,
     investmentType: "Income & Growth",
     isShariah: true,
-    ytdHistory: [
-      { date: "2020-01-01", value: 100.0 },
-      { date: "2021-01-01", value: 125.0 },
-      { date: "2022-01-01", value: 150.0 },
-      { date: "2023-01-01", value: 175.0 },
-      { date: "2023-09-01", value: 190.0 },
-    ],
-    navHistory: [
-      { date: "2020-01-01", value: 0.5 },
-      { date: "2021-01-01", value: 0.625 },
-      { date: "2022-01-01", value: 0.75 },
-      { date: "2023-01-01", value: 0.875 },
-      { date: "2023-09-01", value: 0.95 },
-    ],
-  },
-  {
+  }),
+  generateData({
+    startDate: "2019-12-15",
+    endDate: "2023-10-15",
     id: nanoid(),
     name: "Joker Profit Fund",
     description:
-      "Joker Profit Fund is an Islamic income and growth fund that aims to provide regular income and medium to long-term capital growth by investing in Shariah-compliant real estate investment trusts (REITs) and Islamic real estate investment trusts (I-REITs) listed on stock exchanges in the Asia Pacific region.",
-    inceptionDate: new Date("2020-01-01"),
-    currentYtd: 45,
-    currentNav: 0.45,
+      "Joker Profit Fund is an income and growth fund that aims to provide regular income and medium to long-term capital growth by investing in real estate investment trusts (REITs) listed on stock exchanges in the Asia Pacific region.",
+    investmentType: "Income & Growth",
+    isShariah: false,
+  }),
+  generateData({
+    startDate: "2020-02-04",
+    endDate: "2023-10-15",
+    id: nanoid(),
+    name: "Wayne Enterprises Fund",
+    description:
+      "Wayne Enterprises Fund focuses on investing in companies that are involved in the development, manufacture, distribution, supply, or sale of medical devices and related technologies. The Fund invests in companies that are involved in the development, manufacture, distribution, supply, or sale of medical devices and related technologies.",
     investmentType: "Income & Growth",
     isShariah: true,
-    ytdHistory: [
-      { date: "2020-01-01", value: 100.0 },
-      { date: "2021-01-01", value: 90.0 },
-      { date: "2022-01-01", value: 120.0 },
-      { date: "2023-01-01", value: 60.0 },
-      { date: "2023-09-01", value: 50.0 },
-    ],
-    navHistory: [
-      { date: "2020-01-01", value: 1.0 },
-      { date: "2021-01-01", value: 0.9 },
-      { date: "2022-01-01", value: 1.2 },
-      { date: "2023-01-01", value: 0.6 },
-      { date: "2023-09-01", value: 0.5 },
-    ],
-  },
+  }),
+  generateData({
+    startDate: "2018-08-28",
+    endDate: "2023-10-15",
+    id: nanoid(),
+    name: "Asset Growth Fund",
+    description:
+      "Asset Growth Fund is a conventional growth fund that aims to achieve medium to long-term capital growth by investing in a diversified portfolio of equity-related securities.",
+    investmentType: "Growth",
+    isShariah: false,
+  }),
+  generateData({
+    startDate: "2020-03-11",
+    endDate: "2023-10-15",
+    id: nanoid(),
+    name: "Global Sukuk Fund",
+    description:
+      "Global Sukuk Fund is an Islamic income fund that aims to provide regular income by investing in a diversified portfolio of Shariah-compliant sukuk and Islamic debt securities.",
+    investmentType: "Income",
+    isShariah: true,
+  }),
+  generateData({
+    startDate: "2019-05-01",
+    endDate: "2023-10-15",
+    id: nanoid(),
+    name: "	Advantage Global Equity Volatility Focused AUD Hedged Class",
+    description:
+      "The Fund aims to provide long term total return from a combination of income and capital growth by investing in a portfolio of global equities. The Fund seeks to achieve its investment objective by investing a minimum of 95% of its NAV will be invested in the HSBC Global Investment Funds - Global Equity Volatility Focused (Target Fund) at all times. This implies that the Fund has a passive strategy. Up to 5% of the Fund's NAV will be invested in Cash and/or liquid assets.",
+    investmentType: "Income",
+    isShariah: true,
+  }),
 ]
 
-const main = async () => {
+async function main() {
+  await useDb().delete(funds)
+
   const storedFunds = await useDb().insert(funds).values(data).returning().all()
 
   console.log("Inserted ", storedFunds.length, " funds!")

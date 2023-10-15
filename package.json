@@ -32,8 +32,10 @@
     "@auth/drizzle-adapter": "^0.3.3",
     "@hebilicious/authjs-nuxt": "^0.3.4",
     "@iconify-json/mdi": "^1.1.54",
+    "apexcharts": "3.43.2-0",
     "better-sqlite3": "^9.0.0",
     "drizzle-orm": "^0.28.6",
-    "nanoid": "^5.0.1"
+    "nanoid": "^5.0.1",
+    "vue3-apexcharts": "^1.4.4"
   }
 }

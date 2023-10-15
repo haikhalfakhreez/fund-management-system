@@ -1,65 +1,60 @@
 import { Fund, FundHistory, FundTotalReturn } from "~/lib/types/fund"
 
-export function getNavPercentageChange(
-  current: number,
-  history: FundHistory[],
-) {
-  const initial = history[0].value
-  const change = current - initial
-  const percentage = (change / initial) * 100
-
-  if (typeof percentage === "number" && !isNaN(percentage)) {
-    return Number((Math.round(percentage * 100) / 100).toFixed(2))
-  } else {
-    return "N/A"
-  }
-}
-
 export function getFundTotalReturn(fund: Fund): FundTotalReturn {
-  const ytdHistory: FundHistory[] = fund.ytdHistory
-  const currentYtd = fund.currentYtd
-  let closestOneMonth = 0
-  let closestOneYear = 0
-  let closestThreeYears = 0
-  let oldest = Infinity
-  let oneMonth = 0
-  let oneYear = 0
-  let threeYears = 0
-  let sinceInception = 0
+  const history: FundHistory[] = fund.navHistory
 
   const oneMonthAgo = new Date().setMonth(new Date().getMonth() - 1)
   const oneYearAgo = new Date().setFullYear(new Date().getFullYear() - 1)
   const threeYearsAgo = new Date().setFullYear(new Date().getFullYear() - 3)
 
-  for (let i = 0; i < ytdHistory.length; i++) {
-    const ytd = ytdHistory[i]
-    const current = new Date(ytd.date).getTime()
-
-    if (current <= oneMonthAgo && current > closestOneMonth) {
-      closestOneMonth = current
-      oneMonth = currentYtd - ytd.value
-    }
-
-    if (current <= oneYearAgo && current > closestOneYear) {
-      closestOneYear = current
-      oneYear = currentYtd - ytd.value
-    }
-
-    if (current <= threeYearsAgo && current > closestThreeYears) {
-      closestThreeYears = current
-      threeYears = currentYtd - ytd.value
-    }
-
-    if (current < oldest) {
-      oldest = current
-      sinceInception = currentYtd - ytd.value
-    }
-  }
+  const initial = history[0][1]
+  const closestOneMonthValue =
+    getClosestDate(oneMonthAgo, history)?.[1] ?? initial
+  const closestOneYearValue =
+    getClosestDate(oneYearAgo, history)?.[1] ?? initial
+  const closestThreeYearsValue =
+    getClosestDate(threeYearsAgo, history)?.[1] ?? initial
 
   return {
-    oneMonth,
-    oneYear,
-    threeYears,
-    sinceInception,
+    oneMonth: getPercentageChange(closestOneMonthValue, fund.currentNav),
+    oneYear: getPercentageChange(closestOneYearValue, fund.currentNav),
+    threeYears: getPercentageChange(closestThreeYearsValue, fund.currentNav),
+    sinceInception: getPercentageChange(initial, fund.currentNav),
   }
+}
+
+function getClosestDate(
+  date: string | number,
+  data: FundHistory[],
+): FundHistory | null {
+  const targetDate = new Date(date)
+
+  for (let i = 0; i < data.length; i++) {
+    const [currentDateString] = data[i]
+    const currentDate = new Date(currentDateString)
+
+    if (currentDate >= targetDate) {
+      return data[i] // Return the first date that is on or after the target date
+    }
+  }
+
+  return null
+}
+
+function getPercentageChange(initial: number, current: number) {
+  return parseFloat((((current - initial) / initial) * 100).toFixed(2))
+}
+
+// Format date to dd MMM yyyy
+export function formatDate(date: string | Date) {
+  const d = typeof date === "string" ? new Date(date) : date
+  const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d)
+  const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d)
+  const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d)
+
+  return `${da} ${mo} ${ye}`
+}
+
+export function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }

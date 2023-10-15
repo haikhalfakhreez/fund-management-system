@@ -5,7 +5,7 @@ const { signOut, session, status, cookies } = useAuth()
 </script>
 
 <template>
-  <UContainer class="py-8">
+  <UContainer class="py-8 w-full">
     <div class="space-y-2 mb-8">
       <h1 class="font-bold font-display text-4xl md:text-6xl">List of Funds</h1>
 
@@ -16,7 +16,7 @@ const { signOut, session, status, cookies } = useAuth()
 
     <FundsTable />
 
-    <UCard class="mt-10">
+    <!-- <UCard class="mt-10">
       <template #header>
         <div class="flex justify-between">
           <h1>Welcome to Nuxt UI Starter</h1>
@@ -45,6 +45,6 @@ const { signOut, session, status, cookies } = useAuth()
         <pre>{{ session?.user }}</pre>
         <pre>{{ cookies }}</pre>
       </div>
-    </UCard>
+    </UCard> -->
   </UContainer>
 </template>

@@ -1,23 +1,30 @@
 <template>
-  <section class="space-y-8">
-    <h2 class="font-semibold text-xl md:text-2xl text-display">Performance</h2>
-
-    <UTable
-      :columns="columns"
-      :rows="rows"
-      class="border rounded-md border-gray-200 dark:border-gray-800"
-      :ui="{
-        td: {
-          font: 'font-semibold',
-          size: 'text-lg',
-          color: 'text-gray-900 dark:text-gray-900',
-        },
-        th: {
-          color: 'text-secondary',
-        },
-      }"
-    />
-  </section>
+  <FundSection title="Performance">
+    <div class="grid">
+      <div
+        class="border rounded-md border-gray-600 overflow-x-auto [&_table_th]:whitespace-nowrap"
+      >
+        <UTable
+          :columns="columns"
+          :rows="rows"
+          :ui="{
+            td: {
+              font: 'font-semibold',
+              size: 'text-lg',
+              color: 'text-gray-900 dark:text-gray-900',
+            },
+            th: {
+              color: 'text-secondary',
+            },
+            tr: {
+              base: 'divide-x divide-gray-600',
+            },
+            base: 'divide-gray-600',
+          }"
+        />
+      </div>
+    </div>
+  </FundSection>
 </template>
 
 <script setup lang="ts">

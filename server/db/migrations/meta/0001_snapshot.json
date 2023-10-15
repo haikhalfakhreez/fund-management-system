@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "488ef19f-3216-4ea6-ac7d-6031c88ecf21",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "6e454613-6f1e-4b75-8bb3-1b7d10514ad9",
+  "prevId": "488ef19f-3216-4ea6-ac7d-6031c88ecf21",
   "tables": {
     "account": {
       "name": "account",
@@ -181,6 +181,13 @@
         "navHistory": {
           "name": "navHistory",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "launchPrice": {
+          "name": "launchPrice",
+          "type": "real",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

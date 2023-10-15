@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FundInvestmentType } from "~/lib/types/fund"
+import { Fund, FundInvestmentType } from "~/lib/types/fund"
 
 const { data: funds } = await useFetch<Fund[]>("/api/funds")
 
@@ -39,10 +39,7 @@ const fundsTable = computed(() => {
     name: fund.name,
     currentYtd: fund.currentYtd + "%",
     currentNav: fund.currentNav,
-    navPercentageChange: getNavPercentageChange(
-      fund.currentNav,
-      fund.navHistory,
-    ),
+    navPercentageChange: getFundTotalReturn(fund).sinceInception,
     investmentType: fund.investmentType as FundInvestmentType,
     isShariah: fund.isShariah,
   }))
@@ -68,7 +65,7 @@ const filteredRows = computed(() => {
     <UInput
       v-model="q"
       name="q"
-      placeholder="Search fund name, type, tags, etc..."
+      placeholder="Search fund name or type"
       icon="i-heroicons-magnifying-glass-20-solid"
       :ui="{ icon: { trailing: { pointer: '' } } }"
     >
@@ -84,40 +81,51 @@ const filteredRows = computed(() => {
       </template>
     </UInput>
 
-    <UTable
-      :columns="columns"
-      :rows="filteredRows"
-      class="border rounded-md border-gray-200 dark:border-gray-800"
-    >
-      <template #name-data="{ row, getRowData }">
-        <UButton variant="link" :to="`fund/${row.id}`" color="black">
-          {{ getRowData() }}
-        </UButton>
-      </template>
+    <div class="grid">
+      <div
+        class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
+      >
+        <UTable :columns="columns" :rows="filteredRows">
+          <template #name-data="{ row, getRowData }">
+            <UButton
+              variant="link"
+              :to="`fund/${row.id}`"
+              color="black"
+              class="px-0"
+            >
+              {{ getRowData() }}
+            </UButton>
+          </template>
 
-      <template #currentNav-data="{ row, getRowData }">
-        <div class="flex items-center gap-x-2">
-          <div>MYR {{ getRowData() }}</div>
-          <UBadge
-            size="xs"
-            variant="soft"
-            :color="row.navPercentageChange < 0 ? 'red' : 'green'"
-            class="text-[10px] leading-none tabular-nums p-1 min-w-[40px] justify-center"
-          >
-            {{ row.navPercentageChange }}%
-          </UBadge>
-        </div>
-      </template>
+          <template #currentNav-data="{ row, getRowData }">
+            <div class="flex items-center gap-x-2">
+              <div>MYR {{ getRowData() }}</div>
+              <UBadge
+                size="xs"
+                variant="soft"
+                :color="row.navPercentageChange < 0 ? 'red' : 'green'"
+                class="text-[10px] leading-none tabular-nums p-1 min-w-[40px] justify-center"
+              >
+                {{ row.navPercentageChange }}%
+              </UBadge>
+            </div>
+          </template>
 
-      <template #tags-data="{ row }">
-        <UBadge :color="row.isShariah ? 'emerald' : 'orange'" variant="outline">
-          {{ row.isShariah ? "Shariah" : "Conventional" }}
-        </UBadge>
-      </template>
+          <template #tags-data="{ row }">
+            <UBadge
+              :color="row.isShariah ? 'green' : 'indigo'"
+              variant="solid"
+              class="w-full justify-center px-3"
+            >
+              {{ row.isShariah ? "Shariah" : "Conventional" }}
+            </UBadge>
+          </template>
 
-      <template #actions-data="{ row }">
-        <UButton :to="`/fund/${row.id}`" variant="solid"> View Fund </UButton>
-      </template>
-    </UTable>
+          <template #actions-data="{ row }">
+            <UButton :to="`/fund/${row.id}`" color="white"> View Fund </UButton>
+          </template>
+        </UTable>
+      </div>
+    </div>
   </div>
 </template>

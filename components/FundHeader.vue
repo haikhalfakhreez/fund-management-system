@@ -4,17 +4,10 @@
   >
     <UContainer class="space-y-10 py-8">
       <div class="space-y-4">
-        <FundHeaderBreadcrumb :page="fund.id" />
+        <FundHeaderBreadcrumb :page="fund.name" />
 
         <div class="flex flex-col md:flex-row justify-between gap-x-20 gap-y-4">
-          <div class="space-y-4">
-            <h1 class="font-bold font-display text-3xl md:text-5xl">
-              {{ fund.name }}
-            </h1>
-            <p class="text-secondary">
-              {{ fund.description }}
-            </p>
-          </div>
+          <PageTitle :name="fund.name" :description="fund.description" />
 
           <div class="shrink-0">
             <div
@@ -41,6 +34,16 @@
         <FundHeaderDetail
           label="Shariah Compliant"
           :value="fund.isShariah ? 'Yes' : 'No'"
+        />
+
+        <FundHeaderDetail
+          label="Launch Date"
+          :value="formatDate(fund.inceptionDate)"
+        />
+
+        <FundHeaderDetail
+          label="Launch Price"
+          :value="`MYR ${fund.launchPrice}`"
         />
       </div>
     </UContainer>
