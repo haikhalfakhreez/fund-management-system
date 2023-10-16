@@ -1,75 +1,31 @@
-# Nuxt UI Minimal Starter
+# Fund Management System
 
-Look at [Nuxt docs](https://nuxt.com/docs/getting-started/introduction) and [Nuxt UI docs](https://ui.nuxt.com) to learn more.
+An open source fund management system built with Nuxt.js and Nuxt UI.
 
-## Setup
+See live demo [here](https://fund-mgt-system.vercel.app/).
 
-Make sure to install the dependencies:
+## Features
 
-```bash
-# npm
-npm install
+- Authentication with GitHub
+- Fund data in details (name, description, investment type, performance history, and current net asset value (NAV))
+- Fund historical performance data in charts
+- Purchase Fund in units
+- Fund transaction history
+- Portfolio management
+- Total investment value
+- Account balance management
+- Account balance transaction history
+- View Fund details with Chart
+- Mock funds data from a real backend (Nuxt Nitro server) and database (SQLite)
+- ORM with drizzle-orm
 
-# pnpm
-pnpm install
+## Tech Stack
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Nuxt.js - Framework
+- Nuxt UI - UI Library
+- Nitro - Backend Server
+- Better-sqlite3 - Database
+- Drizzle ORM - ORM
+- Apexcharts - Chart
+- Authjs-nuxt - Authentication
+- Tailwind CSS - Styling

@@ -21,7 +21,7 @@
       <div class="flex items-center gap-x-1">
         <UButton
           external
-          to="https://github.com/fayazara/feedbackjar"
+          to="https://github.com/haikhalfakhreez/fund-management-system"
           target="_blank"
           color="gray"
           variant="ghost"
