@@ -7,6 +7,7 @@ An open source fund management system built with Nuxt.js and Nuxt UI.
 - Authentication with GitHub
 - Fund data in details (name, description, investment type, performance history, and current net asset value (NAV))
 - Fund historical performance data in charts
+- Fund comparison tools, with historical charts and performance data
 - Purchase Fund in units
 - Fund transaction history
 - Portfolio management
