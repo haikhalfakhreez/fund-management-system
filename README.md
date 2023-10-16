@@ -34,6 +34,13 @@ An open source fund management system built with Nuxt.js and Nuxt UI.
 - Node.js (>= v20.x)
 - Pnpm (>= v8.x)
 
+## Installation
+
+1. Clone the repository.
+1. Install the dependencies.
+1. Generate and seed the database with mock data.
+1. Start the development server.
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
