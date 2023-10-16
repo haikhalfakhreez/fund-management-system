@@ -2,7 +2,7 @@
 
 An open source fund management system built with Nuxt.js and Nuxt UI.
 
-See live demo [here](https://fund-mgt-system.vercel.app/).
+See live demo [here](https://fund-management-system.vercel.app/).
 
 ## Features
 
