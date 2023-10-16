@@ -41,7 +41,7 @@ Start the development server on `http://localhost:3000`:
 # pnpm
 pnpm install
 
-pnpm db:all # For generating, deploying migrations and seeding
+pnpm run db:all # For generating, deploying migrations and seeding
 
 pnpm run dev # For starting the development server
 
