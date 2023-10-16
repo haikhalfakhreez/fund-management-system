@@ -2,8 +2,6 @@
 
 An open source fund management system built with Nuxt.js and Nuxt UI.
 
-See live demo [here](https://fund-management-system.vercel.app/).
-
 ## Features
 
 - Authentication with GitHub
@@ -29,3 +27,22 @@ See live demo [here](https://fund-management-system.vercel.app/).
 - Apexcharts - Chart
 - Authjs-nuxt - Authentication
 - Tailwind CSS - Styling
+
+## Requirements
+
+- Node.js (>= v20.x)
+- Pnpm (>= v8.x)
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# pnpm
+pnpm install
+
+pnpm db:all # For generating, deploying migrations and seeding
+
+pnpm run dev # For starting the development server
+
+```
