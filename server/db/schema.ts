@@ -137,3 +137,12 @@ export const balanceHistory = sqliteTable("balanceHistory", {
   }).notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
 })
+
+export const comparisons = sqliteTable("comparisons", {
+  id: text("id").primaryKey(),
+  userId: text("userId")
+    .references(() => users.id)
+    .notNull()
+    .unique(),
+  fundIds: text("fundIds", { mode: "json" }).$type<string[]>(),
+})

@@ -14,7 +14,7 @@
       </UFormGroup>
     </div>
 
-    <LineChart :key="key" :data="data" :label="label" />
+    <LineChart :key="key" :series="series" :label="label" />
   </PageSection>
 </template>
 
@@ -32,7 +32,7 @@ const view = ref(options[0])
 const from = ref("")
 const to = ref("")
 
-const data = computed(() => {
+const series = computed(() => {
   let history = view.value === options[0] ? fund.ytdHistory : fund.navHistory
 
   if (from.value) {
@@ -53,7 +53,12 @@ const data = computed(() => {
     })
   }
 
-  return history
+  return [
+    {
+      name: "MYR",
+      data: history,
+    },
+  ]
 })
 
 const label = computed(() => {

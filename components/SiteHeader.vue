@@ -24,6 +24,7 @@
           <ULink to="/balance" class="text-xs text-muted"
             >Account Balance</ULink
           >
+          <ULink to="/comparison" class="text-xs text-muted">Comparison</ULink>
         </nav>
       </div>
 

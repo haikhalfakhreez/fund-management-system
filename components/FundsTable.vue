@@ -30,6 +30,7 @@ const columns = [
   },
   {
     key: "actions",
+    label: "Actions",
   },
 ]
 
@@ -77,56 +78,53 @@ const filteredRows = computed(() => {
       </template>
     </UInput>
 
-    <div class="grid">
-      <div
-        class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
-      >
-        <UTable :columns="columns" :rows="filteredRows">
-          <template #name-data="{ row, getRowData }">
+    <UTableWrapper class="[&_table_th]:whitespace-nowrap">
+      <UTable :columns="columns" :rows="filteredRows">
+        <template #name-data="{ row, getRowData }">
+          <div class="max-w-[300px]">
             <UButton
               variant="link"
               :to="`/fund/${row.id}`"
               color="black"
-              class="px-0"
+              class="px-0 whitespace-pre-line"
             >
               {{ getRowData() }}
             </UButton>
-          </template>
+          </div>
+        </template>
 
-          <template #currentNav-data="{ row, getRowData }">
-            <div class="flex items-center gap-x-2">
-              <div>MYR {{ getRowData() }}</div>
-              <UBadge
-                size="xs"
-                variant="soft"
-                :color="row.navPercentageChange < 0 ? 'red' : 'green'"
-                class="text-[10px] leading-none tabular-nums p-1 min-w-[40px] justify-center"
-              >
-                {{ row.navPercentageChange }}%
-              </UBadge>
-            </div>
-          </template>
-
-          <template #tags-data="{ row }">
+        <template #currentNav-data="{ row, getRowData }">
+          <div class="flex items-center gap-x-2">
+            <div>MYR {{ getRowData() }}</div>
             <UBadge
-              :color="row.isShariah ? 'green' : 'indigo'"
-              variant="solid"
-              class="w-full justify-center px-3"
+              size="xs"
+              variant="soft"
+              :color="row.navPercentageChange < 0 ? 'red' : 'green'"
+              class="text-[10px] leading-none tabular-nums p-1 min-w-[40px] justify-center"
             >
-              {{ row.isShariah ? "Shariah" : "Conventional" }}
+              {{ row.navPercentageChange }}%
             </UBadge>
-          </template>
+          </div>
+        </template>
 
-          <template #actions-data="{ row }">
-            <div class="flex items-stretch gap-2">
-              <UButton :to="`/fund/${row.id}`" color="white">
-                View Fund
-              </UButton>
-              <PurchaseModal :fund="row" small />
-            </div>
-          </template>
-        </UTable>
-      </div>
-    </div>
+        <template #tags-data="{ row }">
+          <UBadge
+            :color="row.isShariah ? 'green' : 'indigo'"
+            variant="solid"
+            class="w-full justify-center px-3"
+          >
+            {{ row.isShariah ? "Shariah" : "Conventional" }}
+          </UBadge>
+        </template>
+
+        <template #actions-data="{ row }">
+          <div class="flex items-stretch gap-2">
+            <ComparisonButton :fund="row" />
+            <UButton :to="`/fund/${row.id}`" color="white"> View Fund </UButton>
+            <PurchaseModal :fund="row" small />
+          </div>
+        </template>
+      </UTable>
+    </UTableWrapper>
   </div>
 </template>

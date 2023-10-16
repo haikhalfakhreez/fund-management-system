@@ -1,29 +1,27 @@
 <template>
   <PageSection title="Performance">
-    <div class="grid">
-      <div
-        class="border rounded-md border-gray-600 overflow-x-auto [&_table_th]:whitespace-nowrap"
-      >
-        <UTable
-          :columns="columns"
-          :rows="rows"
-          :ui="{
-            td: {
-              font: 'font-semibold',
-              size: 'text-lg',
-              color: 'text-gray-900 dark:text-gray-900',
-            },
-            th: {
-              color: 'text-secondary',
-            },
-            tr: {
-              base: 'divide-x divide-gray-600',
-            },
-            base: 'divide-gray-600',
-          }"
-        />
-      </div>
-    </div>
+    <UTableWrapper
+      class="[&>div]:border-gray-600 [&_table_th]:whitespace-nowrap"
+    >
+      <UTable
+        :columns="columns"
+        :rows="rows"
+        :ui="{
+          td: {
+            font: 'font-semibold',
+            size: 'text-lg',
+            color: 'text-gray-900 dark:text-gray-900',
+          },
+          th: {
+            color: 'text-secondary',
+          },
+          tr: {
+            base: 'divide-x divide-gray-600',
+          },
+          base: 'divide-gray-600',
+        }"
+      />
+    </UTableWrapper>
   </PageSection>
 </template>
 

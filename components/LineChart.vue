@@ -17,19 +17,15 @@
 import VueApexCharts from "vue3-apexcharts"
 import { FundHistory } from "~/lib/types/fund"
 
-const { data, label } = defineProps<{
-  data: FundHistory[]
+const { series, label } = defineProps<{
+  series: {
+    name: string
+    data: FundHistory[]
+  }[]
   label: string
 }>()
 
 const isNav = computed(() => label === "NAV")
-
-const series = [
-  {
-    name: "MYR",
-    data,
-  },
-]
 
 const options = {
   yaxis: {

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `comparisons_userId_unique` ON `comparisons` (`userId`);

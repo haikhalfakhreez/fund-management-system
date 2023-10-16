@@ -64,28 +64,24 @@ const total = computed(() => {
     <PortfolioInvestment />
 
     <PageSection title="Transaction History">
-      <div class="grid">
-        <div
-          class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
-        >
-          <UTable :columns="columns" :rows="rows">
-            <template #createdAt-data="{ getRowData }">
-              {{ formatDate(getRowData(), { time: true }) }}
-            </template>
+      <UTableWrapper class="[&_table_th]:whitespace-nowrap">
+        <UTable :columns="columns" :rows="rows">
+          <template #createdAt-data="{ getRowData }">
+            {{ formatDate(getRowData(), { time: true }) }}
+          </template>
 
-            <template #fund-data="{ row, getRowData }">
-              <UButton
-                variant="link"
-                :to="`/fund/${getRowData().id}`"
-                color="black"
-                class="px-0"
-              >
-                {{ getRowData().name }}
-              </UButton>
-            </template>
-          </UTable>
-        </div>
-      </div>
+          <template #fund-data="{ row, getRowData }">
+            <UButton
+              variant="link"
+              :to="`/fund/${getRowData().id}`"
+              color="black"
+              class="px-0"
+            >
+              {{ getRowData().name }}
+            </UButton>
+          </template>
+        </UTable>
+      </UTableWrapper>
     </PageSection>
   </UContainer>
 </template>

@@ -44,17 +44,13 @@ const rows = computed(() => history.value ?? [])
     </div>
 
     <PageSection title="Transaction History">
-      <div class="grid">
-        <div
-          class="border rounded-md border-gray-200 dark:border-gray-800 overflow-x-auto [&_table_th]:whitespace-nowrap"
-        >
-          <UTable :columns="columns" :rows="rows">
-            <template #createdAt-data="{ getRowData }">
-              {{ formatDate(getRowData(), { time: true }) }}
-            </template>
-          </UTable>
-        </div>
-      </div>
+      <UTableWrapper class="[&_table_th]:whitespace-nowrap">
+        <UTable :columns="columns" :rows="rows">
+          <template #createdAt-data="{ getRowData }">
+            {{ formatDate(getRowData(), { time: true }) }}
+          </template>
+        </UTable>
+      </UTableWrapper>
     </PageSection>
   </UContainer>
 </template>
