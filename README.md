@@ -59,6 +59,14 @@ If you need to start over with new data, you can run the following commands:
 
 ```bash
 
-pnpm run db:reset # For resetting the database
+pnpm run db:reset
+
+```
+
+Then, run the following commands again to generate and seed the database with mock data:
+
+```bash
+
+pnpm run db:all
 
 ```
