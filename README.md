@@ -63,7 +63,7 @@ pnpm run db:reset
 
 ```
 
-Then, run the following commands again to generate and seed the database with mock data:
+Then, run the following command again to generate and seed the database with mock data:
 
 ```bash
 
