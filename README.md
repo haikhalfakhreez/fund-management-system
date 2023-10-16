@@ -47,3 +47,11 @@ pnpm run db:all # For generating, deploying migrations and seeding
 pnpm run dev # For starting the development server
 
 ```
+
+If you need to start over with new data, you can run the following commands:
+
+```bash
+
+pnpm run db:reset # For resetting the database
+
+```
