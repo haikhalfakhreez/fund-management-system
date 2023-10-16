@@ -41,7 +41,7 @@ An open source fund management system built with Nuxt.js and Nuxt UI.
 1. Generate and seed the database with mock data.
 1. Start the development server.
 
-## Development Server
+## Step-by-step
 
 Start the development server on `http://localhost:3000`:
 
