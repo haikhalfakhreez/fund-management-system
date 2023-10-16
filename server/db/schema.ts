@@ -4,6 +4,7 @@ import {
   integer,
   real,
   primaryKey,
+  unique,
 } from "drizzle-orm/sqlite-core"
 import { FundHistory } from "~/lib/types/fund"
 import type { AdapterAccount } from "@auth/core/adapters"
@@ -60,16 +61,23 @@ export const verificationTokens = sqliteTable(
 )
 
 // App Data
-export const investments = sqliteTable("investment", {
-  id: text("id").primaryKey(),
-  userId: text("userId")
-    .references(() => users.id)
-    .notNull()
-    .unique(),
-  fundId: text("fundId"),
-  units: real("units"),
-  amount: real("amount"),
-})
+export const investments = sqliteTable(
+  "investment",
+  {
+    id: text("id").primaryKey(),
+    userId: text("userId")
+      .references(() => users.id)
+      .notNull(),
+    fundId: text("fundId")
+      .references(() => funds.id)
+      .notNull(),
+    units: real("units"),
+    amount: real("amount"),
+  },
+  (t) => ({
+    unique: unique().on(t.userId, t.fundId),
+  }),
+)
 
 export const funds = sqliteTable("fund", {
   id: text("id").primaryKey(),
@@ -97,7 +105,9 @@ export const transactions = sqliteTable("transactions", {
   userId: text("userId")
     .references(() => users.id)
     .notNull(),
-  fundId: text("fundId").references(() => funds.id),
+  fundId: text("fundId")
+    .references(() => funds.id)
+    .notNull(),
   transactionType: text("transactionType", {
     enum: ["Purchase", "Sale"],
   }).notNull(),

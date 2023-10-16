@@ -61,6 +61,8 @@ const total = computed(() => {
 
     <NumberDisplay label="Total Investment (MYR)" :value="total.toFixed(2)" />
 
+    <PortfolioInvestment />
+
     <PageSection title="Transaction History">
       <div class="grid">
         <div

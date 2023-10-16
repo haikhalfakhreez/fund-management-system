@@ -40,6 +40,8 @@ async function submit(event: FormSubmitEvent<any>) {
     })
 
     await wait(500)
+    await refreshNuxtData()
+
     isOpen.value = false
     loading.value = false
 

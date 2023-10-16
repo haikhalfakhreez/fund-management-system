@@ -12,7 +12,8 @@
     "db:generate": "drizzle-kit generate:sqlite",
     "db:push": "drizzle-kit push:sqlite",
     "db:seed": "tsx ./server/db/seed.ts",
-    "db:all": "pnpm run db:generate && pnpm run db:push && pnpm run db:seed"
+    "db:all": "pnpm run db:generate && pnpm run db:push && pnpm run db:seed",
+    "db:reset": "rm -rf ./server/db/sqlite.db ./server/db/migrations"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

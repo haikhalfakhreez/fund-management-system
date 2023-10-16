@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm"
+import { eq, and } from "drizzle-orm"
 import {
   funds,
   investments,
@@ -17,16 +17,30 @@ export async function purchaseFund({
   units: number
 }) {
   await useDb().transaction(async (tx) => {
-    const fund = await tx.query.funds.findFirst({
-      where: eq(funds.id, fundId),
-    })
+    const fund = await tx.select().from(funds).where(eq(funds.id, fundId)).get()
 
     if (!fund) {
       throw new Error("Fund not found")
     }
 
+    let currentBalance = 0
+    const accBalance = await tx
+      .select()
+      .from(accountBalance)
+      .where(eq(accountBalance.userId, userId))
+      .get()
+
+    if (accBalance) {
+      currentBalance = accBalance.balance
+    }
+
     const amount = integerToTwoDecimal(units * fund.currentNav)
 
+    if (currentBalance < amount) {
+      throw new Error("Insufficient funds")
+    }
+
+    // Add new transaction
     await tx.insert(transactions).values({
       id: nanoid(),
       userId,
@@ -36,6 +50,18 @@ export async function purchaseFund({
       amount,
       createdAt: new Date(),
     })
+
+    // Add new investment
+    const currentInvestment = await tx
+      .select()
+      .from(investments)
+      .where(
+        and(eq(investments.userId, userId), eq(investments.fundId, fundId)),
+      )
+      .get()
+
+    const currentUnits = currentInvestment?.units || 0
+    const currentAmount = currentInvestment?.amount || 0
 
     await tx
       .insert(investments)
@@ -47,38 +73,28 @@ export async function purchaseFund({
         amount,
       })
       .onConflictDoUpdate({
-        target: investments.userId,
+        target: [investments.fundId, investments.userId],
         set: {
-          units,
-          amount,
+          units: currentUnits + units,
+          amount: integerToTwoDecimal(currentAmount + amount),
         },
       })
 
-    let accBalance = await tx.query.accountBalance.findFirst({
-      where: eq(accountBalance.userId, userId),
-    })
-
-    if (!accBalance) {
-      accBalance = await tx
-        .insert(accountBalance)
-        .values({
-          id: nanoid(),
-          userId,
-          balance: 0,
-        })
-        .returning()
-        .get()
-    }
-
-    const currentBalance = accBalance.balance
-
-    if (currentBalance < amount) {
-      throw new Error("Insufficient funds")
-    }
-
     const balance = currentBalance - amount
 
-    await tx.update(accountBalance).set({ balance })
+    await tx
+      .insert(accountBalance)
+      .values({
+        id: nanoid(),
+        userId,
+        balance,
+      })
+      .onConflictDoUpdate({
+        target: accountBalance.userId,
+        set: {
+          balance,
+        },
+      })
 
     await tx.insert(balanceHistory).values({
       id: nanoid(),
