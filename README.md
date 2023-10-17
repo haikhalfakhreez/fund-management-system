@@ -37,6 +37,7 @@ An open source fund management system built with Nuxt.js and Nuxt UI.
 ## Installation
 
 1. Clone the repository.
+1. Duplicate .env file from .env.example and fill in the required environment variables.
 1. Install the dependencies.
 1. Generate and seed the database with mock data.
 1. Start the development server.
@@ -46,7 +47,9 @@ An open source fund management system built with Nuxt.js and Nuxt UI.
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# pnpm
+
+cp .env.example .env
+
 pnpm install
 
 pnpm run db:all # For generating, deploying migrations and seeding
