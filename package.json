@@ -27,7 +27,7 @@
     "prettier": "3.0.3",
     "tsx": "^3.13.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.14.0"
+    "wrangler": "3.4.0"
   },
   "dependencies": {
     "@auth/core": "^0.16.1",
