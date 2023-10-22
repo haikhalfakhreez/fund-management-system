@@ -26,7 +26,8 @@
     "nuxt": "^3.7.4",
     "prettier": "3.0.3",
     "tsx": "^3.13.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "wrangler": "^3.14.0"
   },
   "dependencies": {
     "@auth/core": "^0.16.1",
