@@ -42,4 +42,7 @@ export default defineNuxtConfig({
       "DM+Sans": [400, 500, 600, 700],
     },
   },
+  nitro: {
+    preset: "cloudflare-pages",
+  },
 })
